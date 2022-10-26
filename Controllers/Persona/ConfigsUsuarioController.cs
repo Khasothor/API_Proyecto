@@ -26,7 +26,7 @@ namespace WebApi2.Controllers.Persona
         {
             Guid guid = Guid.Parse(EntiOrgId);
 
-            var y = await _context.ConfiguracionUsuario.Where(x => x.ConfigUsuarioId == id && x.EntiOrgContId.Equals(guid)).FirstAsync();
+            var y = await _context.ConfiguracionUsuario.Where(x => x.ConfigUsuarioFK == id && x.EntiOrgContId.Equals(guid)).FirstAsync();
 
             if (y == null)
             {

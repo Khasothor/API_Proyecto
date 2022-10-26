@@ -17,6 +17,9 @@ namespace WebApi2.Data
         {
 
         }
+        //==========TEST============
+        public DbSet<Test> Tests { get; set; }
+        //==========TEST============
 
         //infra
         public DbSet<EntiOrgCont> EntiOrgsCont { get; set; }
@@ -28,7 +31,7 @@ namespace WebApi2.Data
         public DbSet<ClieProv> ClieProvs { get; set; }
         public DbSet<PermisoUsuario> PermisosUsuario { get; set; }
         public DbSet<ConfigUsuario> ConfiguracionUsuario { get; set; }
-
+        public DbSet<Usuario> Usuarios { get; set; }
         //Otros
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<UniMed> UnidadesMedida { get; set; }
@@ -37,14 +40,12 @@ namespace WebApi2.Data
         public DbSet<Shortcut> Shortcuts { get; set; }
         public DbSet<Ayuda> Ayudas { get; set; }
         public DbSet<Link> Link { get; set; }
-        //inve
+        public DbSet<Notificacion> Notificaciones { get; set; }
         public DbSet<TipoDocInv> TipoDocsInv { get; set; }
-        public DbSet<HistoriaEntradaSalida> HistoriaEntradaSalidas { get; set; }
-        public DbSet<EntradaSalida> EntradasSalidas { get; set; }
+        //inve
 
         public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<Caracteristica> Caracteristicas { get; set; }
-        public DbSet<CodAltInv> CodsAltInv { get; set; }
         public DbSet<Existencia> Existencias { get; set; }
         public DbSet<InveProv> InveProvs { get; set; }
         public DbSet<Ubicacion> Ubicaciones { get; set; }
@@ -55,11 +56,6 @@ namespace WebApi2.Data
                 .HasOne(x => x.Caracteristicas)
                 .WithOne(x => x.Inv)
                 .HasForeignKey<Caracteristica>(x => x.CaractFK);
-
-            modelBuilder.Entity<Inventario>()
-                .HasOne(x => x.CodAlt)
-                .WithOne(x => x.Inv)
-                .HasForeignKey<CodAltInv>(x => x.CodAltFK);
 
             modelBuilder.Entity<Inventario>()
                 .HasOne(x => x.ExistenciaInv)
@@ -75,7 +71,20 @@ namespace WebApi2.Data
                .HasOne(x => x.UbicacionInv)
                .WithOne(x => x.Inv)
                .HasForeignKey<Ubicacion>(x => x.UbiFK);
+
+            modelBuilder.Entity<Usuario>()
+                .HasOne(x => x.PermisoUsuario_)
+                .WithOne(x => x.Usuario_Permiso)
+                .HasForeignKey<PermisoUsuario>(x => x.PermisoUsuarioFK);
+
+            modelBuilder.Entity<Usuario>()
+                .HasOne(x => x.ConfigUsuario_)
+                .WithOne(x => x.Usuario_Config)
+                .HasForeignKey<ConfigUsuario>(x => x.ConfigUsuarioFK);
+
         }
+
+        public DbSet<WebApi2.Models.Otros.Test> Test { get; set; }
     }
 
 

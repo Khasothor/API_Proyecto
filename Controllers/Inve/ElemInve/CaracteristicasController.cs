@@ -56,13 +56,14 @@ namespace WebApi2.Controllers.Inve.ElemInve
         public async Task<IActionResult> PutCaracteristica(string id, Caracteristica x)
         {
             Guid guidid = Guid.Parse(id);
-            if (guidid != x.CaractFK)
+            
+            if (guidid != x.CaracteristicaId)
             {
                 return BadRequest();
             }
-
+            
             _context.Entry(x).State = EntityState.Modified;
-
+            
             try
             {
                 await _context.SaveChangesAsync();

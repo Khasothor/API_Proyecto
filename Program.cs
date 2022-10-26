@@ -11,7 +11,6 @@ using WebApi2.Data;
 using WebApi2.Data.Initializers.Infra;
 using WebApi2.Data.Initializers.Persona;
 using WebApi2.Data.Initializers.Otros;
-using WebApi2.Data.Initializers.Inve;
 
 namespace WebApi2
 {

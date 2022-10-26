@@ -22,28 +22,22 @@ namespace WebApi2.Controllers.Inve
         }
 
         [Route("[action]/{entiOrgId}")]
-        public async Task<ActionResult<TipoDocInv>> GetTipoDocInv(string EntiOrgId)
+        public async Task<ActionResult<IEnumerable<TipoDocInv>>> GetTipoDocs(string EntiOrgId)
         {
-            Guid guid = Guid.Parse(EntiOrgId);
-            var tdi = await _context.TipoDocsInv.Where(x => x.EntiOrgContId.Equals(guid)).FirstAsync();
-
-            if (tdi == null)
+            if (EntiOrgId == null || EntiOrgId == "")
             {
                 return NotFound();
             }
-
-            return tdi;
+            else
+            {
+                Guid guid = Guid.Parse(EntiOrgId);
+                return await _context.TipoDocsInv.Where(x => x.EntiOrgContId.Equals(guid)).ToListAsync();
+            }
         }
 
-        [HttpPut("[action]/{entiOrgId}")]
-        public async Task<IActionResult> PutTipoDocInv(TipoDocInv tipoDocInv, string EntiOrgId)
+        [HttpPut]
+        public async Task<IActionResult> PutTipoDocInv(TipoDocInv tipoDocInv, int? id)
         {
-            Guid guid = Guid.Parse(EntiOrgId);
-            if (guid != tipoDocInv.EntiOrgContId)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(tipoDocInv).State = EntityState.Modified;
 
             try
@@ -52,7 +46,7 @@ namespace WebApi2.Controllers.Inve
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TipoDocInvExists(guid))
+                if (!TipoDocInvExists(id))
                 {
                     return NotFound();
                 }
@@ -74,11 +68,10 @@ namespace WebApi2.Controllers.Inve
             return NoContent();
         }
 
-        [HttpDelete("[action]/{entiOrgId}")]
-        public async Task<ActionResult<TipoDocInv>> DeleteTipoDocInv(string EntiOrgId)
+        [Route("[action]/{id}")]
+        public async Task<ActionResult<TipoDocInv>> DeleteTipoDocInv(int id)
         {
-            Guid guid = Guid.Parse(EntiOrgId);
-            var tdi = await _context.TipoDocsInv.FirstOrDefaultAsync(x => x.EntiOrgContId.Equals(guid));
+            var tdi = await _context.TipoDocsInv.FirstOrDefaultAsync(x => x.TipoDocInvId.Equals(id));
 
             if (tdi == null)
             {
@@ -91,9 +84,9 @@ namespace WebApi2.Controllers.Inve
             return NoContent();
         }
 
-        private bool TipoDocInvExists(Guid guid)
+        private bool TipoDocInvExists(int? id)
         {
-            return _context.TipoDocsInv.Any(e => e.EntiOrgContId == guid);
+            return _context.TipoDocsInv.Any(e => e.TipoDocInvId == id);
         }
     }
 }

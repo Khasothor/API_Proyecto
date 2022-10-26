@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi2.Data;
 
+#nullable disable
+
 namespace WebApi2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
@@ -15,16 +17,18 @@ namespace WebApi2.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("WebApi2.Models.Infra.AlmaRuta", b =>
                 {
                     b.Property<int>("AlmaRutaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlmaRutaId"), 1L, 1);
 
                     b.Property<string>("Catego")
                         .IsRequired()
@@ -133,8 +137,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("SucursalId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SucursalId"), 1L, 1);
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -221,69 +226,6 @@ namespace WebApi2.Migrations
                     b.ToTable("Caracteristicas");
                 });
 
-            modelBuilder.Entity("WebApi2.Models.Inve.CodAltInv", b =>
-                {
-                    b.Property<Guid>("CodAltInvId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CodAltFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodAltInvJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("EntiOrgContId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CodAltInvId");
-
-                    b.HasIndex("CodAltFK")
-                        .IsUnique();
-
-                    b.ToTable("CodsAltInv");
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.EntradaSalida", b =>
-                {
-                    b.Property<Guid>("EntradaSalidaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AlmaRutaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClieProvId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("EntiOrgContId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("EntradaSalidaJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Folio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SucursalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TipoDocInv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EntradaSalidaId");
-
-                    b.HasIndex("EntiOrgContId");
-
-                    b.ToTable("EntradasSalidas");
-                });
-
             modelBuilder.Entity("WebApi2.Models.Inve.Existencia", b =>
                 {
                     b.Property<Guid>("ExistenciaId")
@@ -293,10 +235,22 @@ namespace WebApi2.Migrations
                     b.Property<Guid>("EntiOrgContId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ExisAlmaJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExisLineJson")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ExistFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ExistenciaJson")
+                    b.Property<string>("LoteJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Restriccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UbicacionJson")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ExistenciaId");
@@ -305,52 +259,6 @@ namespace WebApi2.Migrations
                         .IsUnique();
 
                     b.ToTable("Existencias");
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.HistoriaEntradaSalida", b =>
-                {
-                    b.Property<int>("HistoriaEntradaSalidaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("EntiOrgCont")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EntiOrgContId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("HistoriaEntradaSalidaJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HistoriaEntradaSalidaId");
-
-                    b.HasIndex("EntiOrgContId");
-
-                    b.ToTable("HistoriaEntradaSalidas");
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.InveProv", b =>
-                {
-                    b.Property<Guid>("InveProvId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EntiOrgContId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("InveProvJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProvFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("InveProvId");
-
-                    b.HasIndex("ProvFK")
-                        .IsUnique();
-
-                    b.ToTable("InveProvs");
                 });
 
             modelBuilder.Entity("WebApi2.Models.Inve.Inventario", b =>
@@ -381,6 +289,9 @@ namespace WebApi2.Migrations
                     b.Property<DateTime>("FechaAlta")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Fraccionable")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("Lote")
                         .HasColumnType("bit");
 
@@ -405,8 +316,8 @@ namespace WebApi2.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UME")
                         .HasColumnType("nvarchar(max)");
@@ -421,12 +332,46 @@ namespace WebApi2.Migrations
                     b.ToTable("Inventarios");
                 });
 
+            modelBuilder.Entity("WebApi2.Models.Inve.InveProv", b =>
+                {
+                    b.Property<Guid>("InveProvId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EntiOrgContId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("InveProvJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProvFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("InveProvId");
+
+                    b.HasIndex("ProvFK")
+                        .IsUnique();
+
+                    b.ToTable("InveProvs");
+                });
+
             modelBuilder.Entity("WebApi2.Models.Inve.TipoDocInv", b =>
                 {
                     b.Property<int>("TipoDocInvId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoDocInvId"), 1L, 1);
+
+                    b.Property<bool>("AfectaA")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("EntiOrgCont")
                         .HasColumnType("uniqueidentifier");
@@ -434,13 +379,19 @@ namespace WebApi2.Migrations
                     b.Property<Guid>("EntiOrgContId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("TipoDocInvJson")
+                    b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
 
                     b.HasKey("TipoDocInvId");
 
-                    b.HasIndex("EntiOrgContId")
-                        .IsUnique();
+                    b.HasIndex("EntiOrgContId");
 
                     b.ToTable("TipoDocsInv");
                 });
@@ -472,8 +423,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("AyudaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AyudaId"), 1L, 1);
 
                     b.Property<string>("Conceptos")
                         .HasColumnType("nvarchar(max)");
@@ -493,8 +445,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("ClaveProdServId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClaveProdServId"), 1L, 1);
 
                     b.Property<string>("ClaveProdJson")
                         .HasColumnType("nvarchar(max)");
@@ -514,10 +467,11 @@ namespace WebApi2.Migrations
 
             modelBuilder.Entity("WebApi2.Models.Otros.ConfigGen", b =>
                 {
-                    b.Property<int>("GonfigGenId")
+                    b.Property<int>("configGenId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("configGenId"), 1L, 1);
 
                     b.Property<Guid>("EntiOrgContId")
                         .HasColumnType("uniqueidentifier");
@@ -531,7 +485,7 @@ namespace WebApi2.Migrations
                     b.Property<string>("ZonasHorarias")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("GonfigGenId");
+                    b.HasKey("configGenId");
 
                     b.HasIndex("EntiOrgContId")
                         .IsUnique();
@@ -543,8 +497,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("HorarioId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HorarioId"), 1L, 1);
 
                     b.Property<string>("Codigo")
                         .HasMaxLength(8)
@@ -575,8 +530,15 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("LinkId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LinkId"), 1L, 1);
+
+                    b.Property<int>("AyudaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Clasif")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Enlace")
                         .HasColumnType("nvarchar(max)");
@@ -595,12 +557,57 @@ namespace WebApi2.Migrations
                     b.ToTable("Link");
                 });
 
+            modelBuilder.Entity("WebApi2.Models.Otros.Notificacion", b =>
+                {
+                    b.Property<Guid>("NotificacionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Accion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArDestino")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArOrigen")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("EntiOrgContId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FechaHora")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ObjetoJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SucDestino")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SucOrigen")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tabla")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotificacionId");
+
+                    b.ToTable("Notificaciones");
+                });
+
             modelBuilder.Entity("WebApi2.Models.Otros.Shortcut", b =>
                 {
                     b.Property<int>("ShortcutId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShortcutId"), 1L, 1);
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -627,12 +634,35 @@ namespace WebApi2.Migrations
                     b.ToTable("Shortcuts");
                 });
 
+            modelBuilder.Entity("WebApi2.Models.Otros.Test", b =>
+                {
+                    b.Property<long>("TestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TestId"), 1L, 1);
+
+                    b.Property<string>("Edad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntiOrgContId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TestId");
+
+                    b.ToTable("Test");
+                });
+
             modelBuilder.Entity("WebApi2.Models.Otros.UniMed", b =>
                 {
                     b.Property<int>("UniMedId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniMedId"), 1L, 1);
 
                     b.Property<Guid>("EntiOrgContId")
                         .HasColumnType("uniqueidentifier");
@@ -655,8 +685,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("ClieprovId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClieprovId"), 1L, 1);
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -717,8 +748,12 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("ConfigUsuarioId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConfigUsuarioId"), 1L, 1);
+
+                    b.Property<int>("ConfigUsuarioFK")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("EntiOrgContId")
                         .HasColumnType("uniqueidentifier");
@@ -726,13 +761,22 @@ namespace WebApi2.Migrations
                     b.Property<string>("FormatoFecha")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Notif")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("PuntoComa")
                         .HasColumnType("bit");
 
                     b.Property<string>("Temas")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("sucPred")
+                        .HasColumnType("int");
+
                     b.HasKey("ConfigUsuarioId");
+
+                    b.HasIndex("ConfigUsuarioFK")
+                        .IsUnique();
 
                     b.ToTable("ConfiguracionUsuario");
                 });
@@ -741,8 +785,9 @@ namespace WebApi2.Migrations
                 {
                     b.Property<int>("PermisoUsuarioId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermisoUsuarioId"), 1L, 1);
 
                     b.Property<string>("Almacen")
                         .HasColumnType("nvarchar(max)");
@@ -759,9 +804,6 @@ namespace WebApi2.Migrations
                     b.Property<string>("ConfigGen")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DatoUsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("EntiOrgCont")
                         .HasColumnType("nvarchar(max)");
 
@@ -777,6 +819,12 @@ namespace WebApi2.Migrations
                     b.Property<string>("Existencia")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Historial")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HistorialAct")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Horario")
                         .HasColumnType("nvarchar(max)");
 
@@ -785,6 +833,12 @@ namespace WebApi2.Migrations
 
                     b.Property<string>("Inventario")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Permiso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PermisoUsuarioFK")
+                        .HasColumnType("int");
 
                     b.Property<string>("Proveedores")
                         .HasColumnType("nvarchar(max)");
@@ -798,8 +852,8 @@ namespace WebApi2.Migrations
                     b.Property<string>("Sucursal")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TiempoAcceso")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TiempoAcceso")
+                        .HasColumnType("int");
 
                     b.Property<string>("TiempoExtra")
                         .HasColumnType("nvarchar(max)");
@@ -816,9 +870,70 @@ namespace WebApi2.Migrations
                     b.Property<string>("UniMedFact")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Usuario")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PermisoUsuarioId");
 
+                    b.HasIndex("PermisoUsuarioFK")
+                        .IsUnique();
+
                     b.ToTable("PermisosUsuario");
+                });
+
+            modelBuilder.Entity("WebApi2.Models.Persona.Usuario", b =>
+                {
+                    b.Property<int>("UsuarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"), 1L, 1);
+
+                    b.Property<string>("Cargo")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("CorreoE")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("EntiOrgContId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FechaRegistro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Observacion")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("UltSesionFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UltSesionIni")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UsuarioId");
+
+                    b.HasIndex("EntiOrgContId");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("WebApi2.Models.Infra.AlmaRuta", b =>
@@ -861,53 +976,11 @@ namespace WebApi2.Migrations
                     b.Navigation("Inv");
                 });
 
-            modelBuilder.Entity("WebApi2.Models.Inve.CodAltInv", b =>
-                {
-                    b.HasOne("WebApi2.Models.Inve.Inventario", "Inv")
-                        .WithOne("CodAlt")
-                        .HasForeignKey("WebApi2.Models.Inve.CodAltInv", "CodAltFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inv");
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.EntradaSalida", b =>
-                {
-                    b.HasOne("WebApi2.Models.Infra.EntiOrgCont", "EntiOrgCont")
-                        .WithMany("EntradasSalidas")
-                        .HasForeignKey("EntiOrgContId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EntiOrgCont");
-                });
-
             modelBuilder.Entity("WebApi2.Models.Inve.Existencia", b =>
                 {
                     b.HasOne("WebApi2.Models.Inve.Inventario", "Inv")
                         .WithOne("ExistenciaInv")
                         .HasForeignKey("WebApi2.Models.Inve.Existencia", "ExistFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inv");
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.HistoriaEntradaSalida", b =>
-                {
-                    b.HasOne("WebApi2.Models.Infra.EntiOrgCont", null)
-                        .WithMany("HistoriaEntradaSalidas")
-                        .HasForeignKey("EntiOrgContId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WebApi2.Models.Inve.InveProv", b =>
-                {
-                    b.HasOne("WebApi2.Models.Inve.Inventario", "Inv")
-                        .WithOne("InveProvs")
-                        .HasForeignKey("WebApi2.Models.Inve.InveProv", "ProvFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -925,11 +998,22 @@ namespace WebApi2.Migrations
                     b.Navigation("EntiOrgCont");
                 });
 
+            modelBuilder.Entity("WebApi2.Models.Inve.InveProv", b =>
+                {
+                    b.HasOne("WebApi2.Models.Inve.Inventario", "Inv")
+                        .WithOne("InveProvs")
+                        .HasForeignKey("WebApi2.Models.Inve.InveProv", "ProvFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inv");
+                });
+
             modelBuilder.Entity("WebApi2.Models.Inve.TipoDocInv", b =>
                 {
                     b.HasOne("WebApi2.Models.Infra.EntiOrgCont", null)
-                        .WithOne("TipoDocsInv")
-                        .HasForeignKey("WebApi2.Models.Inve.TipoDocInv", "EntiOrgContId")
+                        .WithMany("TipoDocsInve")
+                        .HasForeignKey("EntiOrgContId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -948,7 +1032,7 @@ namespace WebApi2.Migrations
             modelBuilder.Entity("WebApi2.Models.Otros.ClaveProdServ", b =>
                 {
                     b.HasOne("WebApi2.Models.Infra.EntiOrgCont", "EntiOrgCont")
-                        .WithMany()
+                        .WithMany("ClaveProdServs")
                         .HasForeignKey("EntiOrgContId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1000,17 +1084,48 @@ namespace WebApi2.Migrations
                     b.Navigation("EntiOrgCont");
                 });
 
+            modelBuilder.Entity("WebApi2.Models.Persona.ConfigUsuario", b =>
+                {
+                    b.HasOne("WebApi2.Models.Persona.Usuario", "Usuario_Config")
+                        .WithOne("ConfigUsuario_")
+                        .HasForeignKey("WebApi2.Models.Persona.ConfigUsuario", "ConfigUsuarioFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario_Config");
+                });
+
+            modelBuilder.Entity("WebApi2.Models.Persona.PermisoUsuario", b =>
+                {
+                    b.HasOne("WebApi2.Models.Persona.Usuario", "Usuario_Permiso")
+                        .WithOne("PermisoUsuario_")
+                        .HasForeignKey("WebApi2.Models.Persona.PermisoUsuario", "PermisoUsuarioFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario_Permiso");
+                });
+
+            modelBuilder.Entity("WebApi2.Models.Persona.Usuario", b =>
+                {
+                    b.HasOne("WebApi2.Models.Infra.EntiOrgCont", "EntiOrgCont")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("EntiOrgContId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EntiOrgCont");
+                });
+
             modelBuilder.Entity("WebApi2.Models.Infra.EntiOrgCont", b =>
                 {
                     b.Navigation("AlmaRutas");
 
+                    b.Navigation("ClaveProdServs");
+
                     b.Navigation("ConfigsGen");
 
                     b.Navigation("DatosFactura");
-
-                    b.Navigation("EntradasSalidas");
-
-                    b.Navigation("HistoriaEntradaSalidas");
 
                     b.Navigation("Horarios");
 
@@ -1020,9 +1135,11 @@ namespace WebApi2.Migrations
 
                     b.Navigation("Sucursales");
 
-                    b.Navigation("TipoDocsInv");
+                    b.Navigation("TipoDocsInve");
 
                     b.Navigation("UniMeds");
+
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("WebApi2.Models.Infra.Sucursal", b =>
@@ -1034,13 +1151,18 @@ namespace WebApi2.Migrations
                 {
                     b.Navigation("Caracteristicas");
 
-                    b.Navigation("CodAlt");
-
                     b.Navigation("ExistenciaInv");
 
                     b.Navigation("InveProvs");
 
                     b.Navigation("UbicacionInv");
+                });
+
+            modelBuilder.Entity("WebApi2.Models.Persona.Usuario", b =>
+                {
+                    b.Navigation("ConfigUsuario_");
+
+                    b.Navigation("PermisoUsuario_");
                 });
 #pragma warning restore 612, 618
         }

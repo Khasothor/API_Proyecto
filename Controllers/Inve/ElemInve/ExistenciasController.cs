@@ -54,7 +54,7 @@ namespace WebApi2.Controllers.Inve.ElemInve
         public async Task<IActionResult> PutExistencia(string id, Existencia x)
         {
             Guid guidid = Guid.Parse(id);
-            if (guidid != x.ExistFK)
+            if (guidid != x.ExistenciaId)
             {
                 return BadRequest();
             }

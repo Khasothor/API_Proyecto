@@ -21,12 +21,27 @@ namespace WebApi2.Controllers.Persona
             _context = context;
         }
 
+        [Route("[action]/{entiOrgId}")]
+        public async Task<ActionResult<IEnumerable<PermisoUsuario>>> GetListaPermisoUsuario(string EntiOrgId)
+        {
+            Guid guid = Guid.Parse(EntiOrgId);
+
+            var x = await _context.PermisosUsuario.Where(x => x.EntiOrgContId.Equals(guid)).ToListAsync();
+
+            if (x == null)
+            {
+                return NotFound();
+            }
+
+            return x;
+        }
+
         [Route("[action]/{entiOrgId}/{id}")]
         public async Task<ActionResult<PermisoUsuario>> GetPermisoUsuario(int id, string EntiOrgId)
         {
             Guid guid = Guid.Parse(EntiOrgId);
             //Guid guidId = Guid.Parse(id);
-            var y = await _context.PermisosUsuario.Where(x => x.DatoUsuarioId == id && x.EntiOrgContId.Equals(guid)).FirstAsync();
+            var y = await _context.PermisosUsuario.Where(x => x.PermisoUsuarioFK.Equals(id) && x.EntiOrgContId.Equals(guid)).FirstAsync();
 
             if (y == null)
             {

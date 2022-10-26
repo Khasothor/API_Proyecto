@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace WebApi2.Models.Persona
 {
@@ -17,6 +18,16 @@ namespace WebApi2.Models.Persona
 
         public string FormatoFecha { get; set; } //esteblece el formato de la fecha: dd/mm/aa, mm/dd/aa, aa/mm/dd
 
+        public int sucPred { get; set; } //sucursal predeterminada del usuario
+
+        public bool Notif { get; set; } // determina si se muestra la ventanilla de notificaciones o no
+
         public Guid EntiOrgContId { get; set; }
+
+
+        public int ConfigUsuarioFK { get; set; }
+
+        [JsonIgnore]
+        public virtual Usuario Usuario_Config { get; set; }
     }
 }

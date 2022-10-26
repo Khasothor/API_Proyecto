@@ -38,21 +38,20 @@ namespace WebApi2.Models.Infra
 
         [JsonIgnore]
         public ICollection<Inventario> Inventarios { get; set; } //inventario
-       
-        [JsonIgnore]
-        public ICollection<HistoriaEntradaSalida> HistoriaEntradaSalidas { get; set; } // historial de entradas y salidas
-
-        [JsonIgnore]
-        public ICollection<EntradaSalida> EntradasSalidas { get; set; } // historial de entradas y salidas
 
         [JsonIgnore]
         public ICollection<Shortcut> Shortcuts { get; set; } // atajos
 
-        //----------Uno a uno
         [JsonIgnore]
-        public TipoDocInv TipoDocsInv { get; set; } //tipo de documentos de inventario
-        //public ICollection<TipoDocInv> TipoDocsInv { get; set; } // tipo de documentos de inventario
+        public ICollection<TipoDocInv> TipoDocsInve { get; set; } // tipo documentos de inventario
 
+        [JsonIgnore]
+        public ICollection<ClaveProdServ> ClaveProdServs { get; set; } // tipo documentos de inventario
+
+        [JsonIgnore]
+        public ICollection<Usuario> Usuarios { get; set; } // usuarios del sistema
+
+        //----------Uno a uno
         [JsonIgnore]
         public ConfigGen ConfigsGen { get; set; } // Configuraciones generales
         //public ICollection<ConfigGen> ConfigsGen { get; set; } // Configuraciones generales

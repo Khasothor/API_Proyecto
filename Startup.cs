@@ -41,6 +41,10 @@ namespace WebApi2
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>(opt =>
+            {
+                opt.EnableSensitiveDataLogging();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

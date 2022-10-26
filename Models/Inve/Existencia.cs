@@ -17,8 +17,16 @@ namespace WebApi2.Models.Inve
         [Key]
         public Guid ExistenciaId { get; set; }
 
-        public string ExistenciaJson { get; set; }
-        
+        public string ExisAlmaJson { get; set; } //json de existencia en almacenes
+
+        public string ExisLineJson { get; set; } //json de existencia en lineas de transporte
+
+        public string UbicacionJson { get; set; } //json de las ubicaciones
+
+        public string LoteJson { get; set; } //json de ubicaciones
+
+        public string Restriccion { get; set; } //json de las restricciones
+
         public Guid ExistFK { get; set; }
         [JsonIgnore]
         public virtual Inventario Inv { get; set; }

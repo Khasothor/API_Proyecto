@@ -8,7 +8,7 @@ namespace WebApi2.Models.Otros
     public class ConfigGen
     {
         [Key]
-        public int GonfigGenId { get; set; }
+        public int configGenId { get; set; }
 
         public int InicioFolMovInve { get; set; } // De donde comienza el contador de movimientos al inventario
 

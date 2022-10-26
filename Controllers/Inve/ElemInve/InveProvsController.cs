@@ -56,7 +56,7 @@ namespace WebApi2.Controllers.Inve.ElemInve
         public async Task<IActionResult> PutInveProv(string id, InveProv x)
         {
             Guid guidid = Guid.Parse(id);
-            if (guidid != x.ProvFK)
+            if (guidid != x.InveProvId)
             {
                 return BadRequest();
             }
@@ -82,34 +82,6 @@ namespace WebApi2.Controllers.Inve.ElemInve
             return NoContent();
         }
 
-        // POST: api/InveProvs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<InveProv>> PostInveProv(InveProv x)
-        //{
-        //    _context.InveProvs.Add(x);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetInveProv", new { id = x.InveProvId }, x);
-        //}
-
-        // DELETE: api/InveProvs/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteInveProv(string id)
-        //{
-        //    Guid guidid = Guid.Parse(id);
-        //    var x = await _context.InveProvs.FirstOrDefaultAsync(x => x.ProvFK.Equals(guidid));
-
-        //    if (x == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.InveProvs.Remove(x);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
 
         private bool InveProvExists(Guid id)
         {

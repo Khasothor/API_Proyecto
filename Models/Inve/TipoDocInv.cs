@@ -12,7 +12,22 @@ namespace WebApi2.Models.Inve
         [Key]
         public int TipoDocInvId { get; set; }
 
-        public string TipoDocInvJson { get; set; }
+        [Required]
+        public string Codigo { get; set; }
+
+        [Required]
+        public string Nombre { get; set; }
+
+        public string Descripcion { get; set; }
+
+        [Required]
+        public bool Status { get; set; }
+
+        [Required]
+        public int Tipo { get; set; } // (1)Entrada, (2)Salida, (3)Bloqueo, (4)Ajuste
+
+        [Required]
+        public bool AfectaA { get; set; } //(True)Almacen, (False)Linea de Transporte
 
         [Required]
         public Guid EntiOrgContId { get; set; }

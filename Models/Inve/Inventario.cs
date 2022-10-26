@@ -34,7 +34,7 @@ namespace WebApi2.Models.Inve
         [StringLength(200)]
         public string Descrip { get; set; }
 
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
         [StringLength(50)]
         public string NumSerie { get; set; }
@@ -54,6 +54,8 @@ namespace WebApi2.Models.Inve
 
         public bool Lote { get; set; }
 
+        public bool Fraccionable { get; set; }
+
         public DateTime FechaAlta { get; set; }
 
         [Required]
@@ -63,7 +65,7 @@ namespace WebApi2.Models.Inve
 
         public Existencia ExistenciaInv { get; set; }
 
-        public CodAltInv CodAlt { get; set; }
+        //public CodAltInv CodAlt { get; set; }
 
         public Ubicacion UbicacionInv { get; set; }
 

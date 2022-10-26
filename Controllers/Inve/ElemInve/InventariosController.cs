@@ -53,25 +53,19 @@ namespace WebApi2.Controllers.Inve
         [HttpPut("[action]/{entiOrgId}/{id}")]
         public async Task<IActionResult> PutInventario(string id, Inventario x, string EntiOrgId)
         {
+
             Guid guid = Guid.Parse(EntiOrgId);
             Guid guidid = Guid.Parse(id);
+
             if (guidid != x.InventarioId && guid != x.EntiOrgContId)
             {
-                return BadRequest();
-            }
-            //En memoria de cacho, 8 de noviembre de 2021, gran perro, gran amigo.
-            CodAltInv codsAltInv = _context.CodsAltInv.FirstOrDefault(cai => cai.EntiOrgContId == x.CodAlt.EntiOrgContId && cai.CodAltFK == x.InventarioId);
 
-            if(codsAltInv == null)
-            {
                 return BadRequest();
             }
 
-            _context.Entry(codsAltInv).Entity.CodAltInvJson = x.CodAlt.CodAltInvJson;
+            Caracteristica caracteristica = _context.Caracteristicas.FirstOrDefault(car => car.EntiOrgContId == x.Caracteristicas.EntiOrgContId && car.CaractFK == x.InventarioId);
 
-            Caracteristica caracteristica = _context.Caracteristicas.FirstOrDefault(car => car.EntiOrgContId == x.CodAlt.EntiOrgContId && car.CaractFK == x.InventarioId);
-
-            if(caracteristica == null)
+            if (caracteristica == null)
             {
                 return BadRequest();
             }
@@ -95,7 +89,6 @@ namespace WebApi2.Controllers.Inve
                     throw;
                 }
             }
-
             return NoContent();
         }
 

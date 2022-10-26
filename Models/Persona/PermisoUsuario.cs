@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi2.Models.Persona
 {
@@ -10,8 +11,7 @@ namespace WebApi2.Models.Persona
     {
         [Key]
         public int PermisoUsuarioId { get; set; }
-        public int DatoUsuarioId { get; set; }
-        public string TiempoAcceso { get; set; }//se queda
+        public int TiempoAcceso { get; set; }//se queda
         public string TiempoExtra { get; set; }//se queda
         public string Estado { get; set; }//se queda
         //Infra
@@ -24,6 +24,8 @@ namespace WebApi2.Models.Persona
         public string Clientes { get; set; }
         public string Proveedores { get; set; }
         public string Horario { get; set; }
+        public string Usuario { get; set; }
+        public string Permiso { get; set; }
         //Inve
         public string InveProv { get; set; }
         //public string Entrada { get; set; }
@@ -35,17 +37,18 @@ namespace WebApi2.Models.Persona
         //otros
         public string ClaveProd { get; set; }
         public string ClaveServ { get; set; }
-        public string ConfigGen { get; set; }    
+        public string ConfigGen { get; set; }
         public string Shortcut { get; set; }
         public string UniMedFact { get; set; }
         public string UniMedDesc { get; set; }
+        public string Historial { get; set; }
+        public string HistorialAct { get; set; }
 
         public Guid EntiOrgContId { get; set; }
-        public PermisoUsuario()
-        {
-            //TiempoExtra = "{\"fechaHoraInicio\": 1614568705.809,\"fechaHoraFinal\": 1614568705.809}";
-            //Estado = false;
-        }
 
+        public int PermisoUsuarioFK { get; set; }
+
+        [JsonIgnore]
+        public virtual Usuario Usuario_Permiso { get; set; }
     }
 }

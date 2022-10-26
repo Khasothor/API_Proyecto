@@ -17,6 +17,10 @@ namespace WebApi2.Models.Otros
 
         public string Enlace { get; set; } //link a la pagina
 
+        public string Clasif { get; set; } //clasificacion de la aplicacion (almacenes, finanzas, mantenimiento, etc)
+
         public string EstaEnJson { get; set; } //el json del menu principal
+
+        public int AyudaId { get; set; } //identificador de la ayuda
     }
 }
